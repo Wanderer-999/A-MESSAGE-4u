@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>For You ❤️</title>
+<!-- Poppins font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff9ecf 0%, #ff4da6 100%);
+    overflow: hidden;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    justify-content: center;
+    text-align: center;
+  }
+  #sparkles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index:1; }
+  .sparkle { position: absolute; background: white; border-radius: 50%; opacity:0.8; animation: sparkle-flicker 2.5s infinite alternate; }
+  @keyframes sparkle-flicker { from {opacity:0.1;} to {opacity:0.8;} }
+  h1 { font-size:56px; font-weight:700; margin:0 20px 20px; text-shadow:0 0 8px #ff77a9,0 0 15px #ff4da6,0 0 20px #ff1a75; animation: glowPulse 3s ease-in-out infinite alternate; z-index:10;}
+  p { font-size:30px; margin:0 20px; line-height:1.6; max-width:600px; text-shadow:0 0 6px #80002c; animation: fadeInUp 2s ease forwards; opacity:0; animation-delay:0.5s;}
+  @keyframes glowPulse {0% {text-shadow:0 0 8px #ff77a9,0 0 15px #ff4da6,0 0 20px #ff1a75;} 100% {text-shadow:0 0 20px #ff77a9,0 0 35px #ff4da6,0 0 45px #ff1a75;}}
+  @keyframes fadeInUp { to {opacity:1; transform:translateY(0);} from {opacity:0; transform:translateY(20px);} }
+  .heart { position:fixed; top:-40px; color:#ff1a75; font-size:32px; opacity:0.8; filter:drop-shadow(0 0 4px #ff4da6); animation-timing-function: cubic-bezier(0.4,0,0.2,1); animation-name: fallHeart,swayHeart; animation-iteration-count: infinite;}
+  @keyframes fallHeart {0%{transform:translateY(0) translateX(0) scale(1);opacity:0.8;} 100%{transform:translateY(110vh) translateX(20px) scale(1.2);opacity:0;}}
+  @keyframes swayHeart {0%,100%{transform:translateX(0);}50%{transform:translateX(15px);}}
+  button#playButton { padding:12px 24px; font-size:24px; border-radius:12px; border:none; background:#ff4da6; color:white; box-shadow:0 0 12px #ff77a9; cursor:pointer; margin-top:20px; z-index:10;}
+  audio { display:none; margin-top:30px; outline:none; border-radius:12px; box-shadow:0 0 12px #ff4da6; width:80%; max-width:400px; }
+  @media (max-width:600px){ h1{font-size:36px;} p{font-size:20px;max-width:90%;margin:0 10px;} button#playButton{font-size:20px;padding:10px 20px;} audio{width:90%;} }
+</style>
+</head>
+<body>
+
+<h1 id="personalMessage">Loading...</h1>
+
+<p id="quote" style="opacity: 0;">
+"If 99.99% of the world's population hate you, there are still 8 million people to love you.<br />
+Even if they aren’t there for you, I am there for you — today, tomorrow, forever and ever."<br /><br />
+— Harsha ❤️🫡
+</p>
+
+<button id="playButton">▶ Play Music</button>
+<audio id="music"></audio>
+
+<div id="sparkles"></div>
+
+<script>
+  let username = prompt("Enter your name ❤️");
+  if (!username || username.trim() === "") username = "Beautiful";
+  document.getElementById('personalMessage').textContent = `I am there for you, ${username} ❤️`;
+  document.getElementById('quote').style.opacity = '1';
+
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = '❤️';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+  }
+  setInterval(createHeart,400);
+
+  const sparklesContainer = document.getElementById('sparkles');
+  for(let i=0;i<50;i++){
+    const sparkle = document.createElement('div');
+    sparkle.className='sparkle';
+    const size = Math.random()*3+1.5;
+    sparkle.style.width=size+'px';
+    sparkle.style.height=size+'px';
+    sparkle.style.top=Math.random()*100+'vh';
+    sparkle.style.left=Math.random()*100+'vw';
+    sparkle.style.animationDuration=(Math.random()*2+1)+'s';
+    sparkle.style.animationDelay=(Math.random()*5)+'s';
+    sparklesContainer.appendChild(sparkle);
+  }
+
+  const music = document.getElementById('music');
+  const playButton = document.getElementById('playButton');
+
+  playButton.addEventListener('click', ()=>{
+    music.src = "golden-hour.mp3";
+    music.load();
+    music.play();
+    playButton.style.display='none';
+    music.style.display='block';
+  });
+</script>
+
+</body>
+</html>
